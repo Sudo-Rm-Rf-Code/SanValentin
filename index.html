@@ -32,8 +32,10 @@
         .btn-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 15px;
             width: 100%;
+            position: relative; /* Base para que las capas funcionen */
         }
 
         button {
@@ -46,8 +48,21 @@
             transition: all 0.3s;
         }
 
-        #si { background-color: #22c55e; color: #000; z-index: 10; }
-        #no { background-color: #ef4444; color: #fff; }
+        /* El SÍ empieza con z-index bajo para estar detrás */
+        #si { 
+            background-color: #22c55e; 
+            color: #000; 
+            z-index: 1; 
+            position: relative;
+        }
+        
+        /* El NO empieza con z-index más alto para estar al frente */
+        #no { 
+            background-color: #ef4444; 
+            color: #fff; 
+            z-index: 10; 
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -68,31 +83,29 @@
         let opacidadNo = 1;
 
         function agrandar() {
-            escalaSi += 0.3; // He subido un poco la velocidad de crecimiento
-            opacidadNo -= 0.1;
+            escalaSi += 0.5; // Crece rápido para alcanzar al NO
+            opacidadNo -= 0.15;
 
             const btnSi = document.getElementById('si');
-            btnSi.style.transform = `scale(${escalaSi})`;
-            
             const btnNo = document.getElementById('no');
+
+            btnSi.style.transform = `scale(${escalaSi})`;
             btnNo.style.opacity = opacidadNo;
             
-            // Usamos else if para que solo elija UNA frase cada vez
+            // Lógica de frases y el "salto" de capa final
             if (escalaSi > 2.5) {
                 btnSi.innerText = "¡SÍÍÍÍ! 💍";
+                btnSi.style.zIndex = "100"; // Aquí el SÍ pasa al frente y tapa al NO
             } else if (escalaSi > 2.0) {
                 btnSi.innerText = "¡DAME EL SÍ! 😏";
-            } else if (escalaSi > 1.7) {
+            } else if (escalaSi > 1.6) {
                 btnSi.innerText = "No vale arrepentirse...";
-            } else if (escalaSi > 1.4) {
-                btnSi.innerText = "¿Segura de lo que haces?";
-            } else if (escalaSi > 1.1) {
+            } else if (escalaSi > 1.2) {
                 btnSi.innerText = "¿Segura? 🥺";
             }
         }
 
         function aceptar() {
-            // AQUÍ ESTÁ EL MENSAJE QUE QUERÍAS
             document.body.innerHTML = `
                 <div style="animation: appear 1s ease-in-out;">
                     <h1 style="font-size: 3rem;">😏</h1>
@@ -101,15 +114,12 @@
                     <p style="font-size: 1.2rem; margin-top: 20px;">(Era la única opción lógica bb)</p>
                 </div>
             `;
-            
-            // Cambiamos el fondo a rosa
             document.body.style.backgroundColor = "#ffc0cb"; 
             document.body.style.color = "#d6004f"; 
         }
     </script>
-
 </body>
-
 </html>
+
 
 
