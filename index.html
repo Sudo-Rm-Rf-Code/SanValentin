@@ -68,7 +68,7 @@
         let opacidadNo = 1;
 
         function agrandar() {
-            escalaSi += 0.2;
+            escalaSi += 0.3; // He subido un poco la velocidad de crecimiento
             opacidadNo -= 0.1;
 
             const btnSi = document.getElementById('si');
@@ -77,11 +77,18 @@
             const btnNo = document.getElementById('no');
             btnNo.style.opacity = opacidadNo;
             
-            // Frases para convencerla mientras crece el botón
-            if (escalaSi > 1.0) btnSi.innerText = "¿Segura?";
-            if (escalaSi > 1.2) btnSi.innerText = "¿Segura que sabes lo que estas haciendo?";
-            if (escalaSi > 1.6) btnSi.innerText = "Luego no vale arrepentirse ";
-            if (escalaSi > 2.0) btnSi.innerText = "¡SÍÍÍÍ! 💍";
+            // Usamos else if para que solo elija UNA frase cada vez
+            if (escalaSi > 2.5) {
+                btnSi.innerText = "¡SÍÍÍÍ! 💍";
+            } else if (escalaSi > 2.0) {
+                btnSi.innerText = "¡DAME EL SÍ! 😏";
+            } else if (escalaSi > 1.7) {
+                btnSi.innerText = "No vale arrepentirse...";
+            } else if (escalaSi > 1.4) {
+                btnSi.innerText = "¿Segura de lo que haces?";
+            } else if (escalaSi > 1.1) {
+                btnSi.innerText = "¿Segura? 🥺";
+            }
         }
 
         function aceptar() {
@@ -104,4 +111,5 @@
 </body>
 
 </html>
+
 
